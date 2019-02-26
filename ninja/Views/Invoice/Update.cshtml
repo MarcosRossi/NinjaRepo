@@ -1,0 +1,26 @@
+﻿@model ninja.Models.InvoiceViewModel
+
+@{
+    ViewBag.Title = "InvoiceForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Update Invoice</h2>
+@if (Model.Details.Count > 0)
+{<h4>@Html.ActionLink("View Invoice Details", "Detail", "Invoice", new { id = Model.Id }, null)</h4>
+
+}
+else
+{
+<div class="alert alert-info">
+    The Invoice doesn´t have details
+</div>
+}
+
+@using (@Html.BeginForm("Update", "Invoice"))
+{
+    @Html.Partial("_InvoiceForm", Model)
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    @Html.ActionLink("Back", "Index", "Invoice", null, new { @class = "btn btn-default" })
+}

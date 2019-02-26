@@ -1,0 +1,14 @@
+﻿@model ninja.Models.InvoiceViewModel
+
+@Html.AntiForgeryToken()
+<div class="form-group">
+    @Html.LabelFor(m => m.InvoiceNumber)
+    @Html.TextBoxFor(m => m.InvoiceNumber, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.InvoiceNumber)
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Type)
+    @Html.TextBoxFor(m => m.Type, new { @class = "form-control", placeholder = "Example: A, B, C" })
+    @Html.ValidationMessageFor(m => m.Type)
+</div>
+@Html.HiddenFor(c => c.Id)

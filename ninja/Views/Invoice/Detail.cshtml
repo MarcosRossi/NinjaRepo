@@ -1,0 +1,37 @@
+﻿@model List<ninja.Models.InvoiceDetailViewModel>
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Invoice Details</h2>
+
+
+<table id="details" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="active">Description</th>
+            <th class="active">Amount</th>
+            <th class="active">Unit Price</th>
+            <th class="active">Total Price</th>
+            <th class="active">Total Price With Taxes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            <tr>
+                <td>@invoice.Description</td>
+                <td>@invoice.Amount</td>
+                <td>@invoice.UnitPrice</td>
+                <td>@invoice.TotalPrice</td>
+                <td>@invoice.TotalPriceWithTaxes</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    @Html.ActionLink("Back", "Edit", "Invoice", new { id = Model.First().InvoiceId }, new { @class = "btn btn-default" })
+</div>

@@ -1,0 +1,71 @@
+﻿@model List<ninja.Models.InvoiceViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Invoice List</h2>
+
+<div class="padbut-10">@Html.ActionLink("New", "New", "Invoice", null, new { @class = "btn btn-primary" })</div>
+
+<table id="invoices" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="active">Type</th>
+            <th class="active">Invoice Number</th>
+            <th class="active"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            <tr>
+                <td>FC - @invoice.Type</td>
+                <td>@invoice.InvoiceNumber</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Invoice", new { id = @invoice.Id }, new { @class = "btn btn-warning btn-sm" })
+                    @*@Html.ActionLink("Delete", "Delete", "Invoice", new { id = @invoice.Id }, new { @class = "btn btn-danger btn-sm js-delete" })*@
+                    <button class='btn btn-danger btn-sm js-delete' data-invoice-id=@invoice.Id>Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Delete row
+            $("#invoices").on("click", ".js-delete", function (e) {
+                let btn = $(e.target);
+                bootbox.confirm({
+                    message: "¿Are you sure?",
+                    buttons: {
+                        confirm: {
+                            label: "Yes",
+                            className: "btn btn-success"
+                        },
+                        cancel: {
+                            label: "No",
+                            className: "btn btn-danger"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/invoice/" + btn.attr('data-invoice-id'),
+                                method: "DELETE",
+                                success: function () {
+                                    debugger;
+                                    btn.parents("tr").remove();
+                                }
+                            })
+                        }
+                    }
+                })
+            });
+        })
+    </script>
+}
