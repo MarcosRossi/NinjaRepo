@@ -22,6 +22,7 @@ namespace ninja.model.Entity
         public double UnitPrice { get; set; }
         public double TotalPrice { get { return this.Amount * this.UnitPrice; } }
         public double TotalPriceWithTaxes { get { return (this.Amount * this.UnitPrice) * this.Taxes; } }
+        public string ComboName { get; set; }
 
     }
 

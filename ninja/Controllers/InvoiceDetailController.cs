@@ -1,4 +1,6 @@
 ﻿using ninja.model.Entity;
+using ninja.model.Manager;
+using ninja.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,54 +12,69 @@ namespace ninja.Controllers
     public class InvoiceDetailController : Controller
     {
 
-        // GET: InvoiceDetail/Details/5
-        public ActionResult Details(int id)
+        private readonly InvoiceManager _manager = null;
+
+        public InvoiceDetailController()
         {
-            return RedirectToAction("Details", "Invoice", new { id = id });
+            this._manager = new InvoiceManager();
         }
 
-        // GET: InvoiceDetail/Create
-        public ActionResult Create()
+        public ActionResult New(int id)
         {
-            return View();
+            this.FillDataSourceInvoice(AutoMapper.Mapper.Map<InvoiceViewModel>(_manager.GetById(id)));
+            return View("Create", new InvoiceDetailViewModel { InvoiceId = id });
         }
 
-        // POST: InvoiceDetail/Create
         [HttpPost]
-        public ActionResult Create(InvoiceDetail collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(InvoiceDetailViewModel viewModel)
         {
-            try
+            this.FillDataSourceInvoice(AutoMapper.Mapper.Map<InvoiceViewModel>(_manager.GetById(viewModel.InvoiceId)));
+            if (!ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                return View("Create", viewModel);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            _manager.GetById(viewModel.InvoiceId).AddDetail(AutoMapper.Mapper.Map<InvoiceDetail>(viewModel));
+
+            return RedirectToAction("Edit", "Invoice", new { id = viewModel.InvoiceId });
         }
 
-        // GET: InvoiceDetail/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, int? invoiceId)
         {
-            return View();
+            var invoiceDb = _manager.GetById(invoiceId.Value);
+            if (invoiceDb == null)
+            {
+                return View("InvoiceError", new InvoiceErrorViewModel { Message = "The invoice detail that you looking for doesnt exist." });
+            }
+            this.FillDataSourceInvoice(AutoMapper.Mapper.Map<InvoiceViewModel>(_manager.GetById(invoiceId.Value)));
+            return View("Update", AutoMapper.Mapper.Map<InvoiceDetailViewModel>(invoiceDb.GetDetail().FirstOrDefault(d => d.Id == id)));
         }
 
-        // POST: InvoiceDetail/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, InvoiceDetail collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(InvoiceDetailViewModel viewModel)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                return View("Update", viewModel);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
+            var invoiceDb = _manager.GetById(viewModel.InvoiceId);
+            if (invoiceDb == null)
             {
-                return View();
+                return View("InvoiceError", new InvoiceErrorViewModel { Message = "The invoice detail that you looking for doesnt exist." });
             }
+
+            AutoMapper.Mapper.Map(viewModel, invoiceDb.GetDetail().FirstOrDefault(d => d.Id == viewModel.Id));
+
+            return RedirectToAction("Edit", "Invoice", new { id = viewModel.InvoiceId });
+        }
+
+        private void FillDataSourceInvoice(InvoiceViewModel invoiceViewModel)
+        {
+            var results = new List<InvoiceViewModel>();
+            results.Add(invoiceViewModel);
+            ViewBag.InvoiceList = new SelectList(results, "Id", "ComboName");
         }
     }
 }

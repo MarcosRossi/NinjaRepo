@@ -19,7 +19,7 @@ namespace ninja.Controllers.API
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteMovie(int id)
+        public IHttpActionResult DeleteDetail(int id)
         {
             _manager.Delete(id);
 

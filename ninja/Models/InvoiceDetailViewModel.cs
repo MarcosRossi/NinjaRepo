@@ -14,23 +14,23 @@ namespace ninja.Models
 
         public long Id { get; set; }
 
-        [Required]
-        //[Display(Name = "Descripción")]
+        [Required]        
         public string Description { get; set; }
 
-        [Required]
-        //[Display(Name = "Cantidad")]
-        public double Amount { get; set; }
+        [Required]        
+        public double? Amount { get; set; }
+
+        [Required]        
+        public double? UnitPrice { get; set; }
 
         [Required]
-        //[Display(Name = "Precio Unitario")]
-        public double UnitPrice { get; set; }
-
-        [Required]
+        [Display(Name ="Invoice")]
         public long InvoiceId { get; set; }
 
         public double TotalPriceWithTaxes { get; set; }
         public double TotalPrice { get; set; }
+
+        public string ComboName { get; set; }
 
     }
 }

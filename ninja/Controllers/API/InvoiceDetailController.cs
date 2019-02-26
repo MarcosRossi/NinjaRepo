@@ -17,11 +17,12 @@ namespace ninja.Controllers.API
         {
             this._manager = new InvoiceManager();
         }
-
+        
         [HttpDelete]
-        public IHttpActionResult DeleteDetail(int id)
+        public IHttpActionResult DeleteDetail(int id, int? invoiceId)
         {
-            _manager.Delete(id);
+            var details = _manager.GetById(invoiceId.Value).GetDetail();
+            details.Remove(details.FirstOrDefault(det => det.Id == id));
 
             return Ok();
         }

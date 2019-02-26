@@ -16,6 +16,7 @@
             <th class="active">Unit Price</th>
             <th class="active">Total Price</th>
             <th class="active">Total Price With Taxes</th>
+            <th class="active">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +28,10 @@
                 <td>@invoice.UnitPrice</td>
                 <td>@invoice.TotalPrice</td>
                 <td>@invoice.TotalPriceWithTaxes</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "InvoiceDetail", new { id = @invoice.Id, invoiceId = @invoice.InvoiceId }, new { @class = "btn btn-warning btn-sm" })
+                    <button class='btn btn-danger btn-sm js-delete' data-detail-id=@invoice.Id data-detail-invoiceId=@invoice.InvoiceId>Delete</button>
+                </td>
             </tr>
         }
     </tbody>
@@ -35,3 +40,40 @@
 <div>
     @Html.ActionLink("Back", "Edit", "Invoice", new { id = Model.First().InvoiceId }, new { @class = "btn btn-default" })
 </div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Delete row
+            $("#details").on("click", ".js-delete", function (e) {
+                let btn = $(e.target);
+                bootbox.confirm({
+                    message: "¿Are you sure?",
+                    buttons: {
+                        confirm: {
+                            label: "Yes",
+                            className: "btn btn-success"
+                        },
+                        cancel: {
+                            label: "No",
+                            className: "btn btn-danger"
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/invoicedetail/" + btn.attr('data-detail-id') + "?invoiceId=" + btn.attr('data-detail-invoiceId'),
+                                method: "DELETE",
+                                success: function () {
+                                    debugger;
+                                    btn.parents("tr").remove();
+                                }
+                            })
+                        }
+                    }
+                })
+            });
+        })
+    </script>
+}

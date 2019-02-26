@@ -13,7 +13,7 @@ namespace ninja.Models
     {
         public InvoiceViewModel()
         {
-            Details =new List<InvoiceDetailViewModel>();            
+            Details = new List<InvoiceDetailViewModel>();
         }
 
         public int Id { get; set; }
@@ -26,6 +26,8 @@ namespace ninja.Models
         [ValidTypeInvoice]
         //[Display(Name = "Tipo Factura")]
         public string Type { get; set; }
+
+        public string ComboName { get { return string.Format("FC - {0} {1}", this.Type, this.InvoiceNumber); } }
 
         public List<InvoiceDetailViewModel> Details { get; set; }
     }

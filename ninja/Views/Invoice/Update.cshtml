@@ -7,15 +7,17 @@
 
 <h2>Update Invoice</h2>
 @if (Model.Details.Count > 0)
-{<h4>@Html.ActionLink("View Invoice Details", "Detail", "Invoice", new { id = Model.Id }, null)</h4>
-
+{
+    <h4>@Html.ActionLink("View Invoice Details", "Detail", "Invoice", new { id = Model.Id }, null)</h4>
 }
 else
 {
-<div class="alert alert-info">
-    The Invoice doesn´t have details
-</div>
+    <div class="alert alert-info">
+        The Invoice doesn´t have details
+    </div>
 }
+<h4>@Html.ActionLink("New Detail", "New", "InvoiceDetail", new { id = Model.Id }, new { @class = "btn btn-primary" })</h4>
+
 
 @using (@Html.BeginForm("Update", "Invoice"))
 {

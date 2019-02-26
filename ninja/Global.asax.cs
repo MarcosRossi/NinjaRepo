@@ -22,7 +22,7 @@ namespace ninja
                 //Domain=> VM 
                 cfg.CreateMap<Invoice, InvoiceViewModel>()
                     .ForMember(dest => dest.Details, opts => opts.MapFrom(src => src.GetDetail()));
-                cfg.CreateMap<InvoiceDetail, InvoiceDetailViewModel>();
+                cfg.CreateMap<InvoiceDetail, InvoiceDetailViewModel>();                
 
                 //VM => Domain
                 /*

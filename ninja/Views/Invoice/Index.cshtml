@@ -24,8 +24,7 @@
                 <td>FC - @invoice.Type</td>
                 <td>@invoice.InvoiceNumber</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", "Invoice", new { id = @invoice.Id }, new { @class = "btn btn-warning btn-sm" })
-                    @*@Html.ActionLink("Delete", "Delete", "Invoice", new { id = @invoice.Id }, new { @class = "btn btn-danger btn-sm js-delete" })*@
+                    @Html.ActionLink("Edit", "Edit", "Invoice", new { id = @invoice.Id }, new { @class = "btn btn-warning btn-sm" })                    
                     <button class='btn btn-danger btn-sm js-delete' data-invoice-id=@invoice.Id>Delete</button>
                 </td>
             </tr>

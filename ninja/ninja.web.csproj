@@ -212,6 +212,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\InvoiceController.cs" />
+    <Compile Include="Controllers\API\InvoiceDetailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\InvoiceDetailController.cs" />
@@ -295,10 +296,11 @@
     <Content Include="Views\Invoice\Create.cshtml" />
     <Content Include="Views\Invoice\Update.cshtml" />
     <Content Include="Views\Invoice\InvoiceError.cshtml" />
+    <Content Include="Views\InvoiceDetail\Create.cshtml" />
+    <Content Include="Views\InvoiceDetail\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\InvoiceDetail\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

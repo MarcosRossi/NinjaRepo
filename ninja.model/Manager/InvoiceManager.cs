@@ -69,6 +69,11 @@ namespace ninja.model.Manager
             }
         }
 
+        public void DeleteOneDetail(int id)
+        {
+                   
+        }
+
 
 
         public void UpdateDetail(long id, IList<InvoiceDetail> detail)
