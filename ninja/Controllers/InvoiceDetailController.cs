@@ -37,7 +37,7 @@ namespace ninja.Controllers
 
             _manager.GetById(viewModel.InvoiceId).AddDetail(AutoMapper.Mapper.Map<InvoiceDetail>(viewModel));
 
-            return RedirectToAction("Edit", "Invoice", new { id = viewModel.InvoiceId });
+            return RedirectToAction("Detail", "Invoice", new { id = viewModel.InvoiceId });
         }
 
         public ActionResult Edit(int id, int? invoiceId)
@@ -67,7 +67,7 @@ namespace ninja.Controllers
 
             AutoMapper.Mapper.Map(viewModel, invoiceDb.GetDetail().FirstOrDefault(d => d.Id == viewModel.Id));
 
-            return RedirectToAction("Edit", "Invoice", new { id = viewModel.InvoiceId });
+            return RedirectToAction("Detail", "Invoice", new { id = viewModel.InvoiceId });
         }
 
         private void FillDataSourceInvoice(InvoiceViewModel invoiceViewModel)
