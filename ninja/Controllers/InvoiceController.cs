@@ -46,12 +46,12 @@ namespace ninja.Controllers
             var invoiceDb = _manager.GetById(id);
             if (invoiceDb == null)
             {
-                return HttpNotFound("Invoice not exists");
+                return View("InvoiceError", new InvoiceErrorViewModel { Message = "The invoice that you looking for doesnt exist." });
             }
-            
+
             return View(AutoMapper.Mapper.Map<List<InvoiceDetailViewModel>>(invoiceDb.GetDetail() as List<InvoiceDetail>));
         }
-        
+
         [ValidateAntiForgeryToken]
         public ActionResult Create(InvoiceViewModel viewmodel)
         {
@@ -71,9 +71,9 @@ namespace ninja.Controllers
             var invoiceDb = _manager.GetById(id);
             if (invoiceDb == null)
             {
-                return HttpNotFound("Invoice not exists");
+                return View("InvoiceError", new InvoiceErrorViewModel { Message = "The invoice that you looking for doesnt exist." });
             }
-            
+
             return View("Update", AutoMapper.Mapper.Map<InvoiceViewModel>(invoiceDb));
         }
 
@@ -88,13 +88,23 @@ namespace ninja.Controllers
             var invoiceDb = _manager.GetById(viewModel.Id);
             if (invoiceDb == null)
             {
-                return HttpNotFound("Invoice not exists");
+                return View("InvoiceError", new InvoiceErrorViewModel { Message = "The invoice that you looking for doesnt exist." });
+            }
+
+            //existe una con esa cabecera que no sea ella misma.
+            if (_manager.GetAll()
+                .FirstOrDefault(i =>
+                i.InvoiceNumber == viewModel.InvoiceNumber
+                && i.Type == viewModel.Type
+                && i.Id != viewModel.Id) != null)
+            {
+                return View("InvoiceError", new InvoiceErrorViewModel { Message = String.Format("There is already an invoice FC - {0} of type {1}.", viewModel.InvoiceNumber, viewModel.Type) });
             }
 
             //Assign header ViewModel to Domain.
             AutoMapper.Mapper.Map(viewModel, invoiceDb);
             //Assign details to Domain.
-            AutoMapper.Mapper.Map(viewModel.Details.ToList(), invoiceDb.GetDetail() as List<InvoiceDetail>);
+            //AutoMapper.Mapper.Map(viewModel.Details.ToList(), invoiceDb.GetDetail() as List<InvoiceDetail>);
 
             return RedirectToAction("Index", "Invoice");
         }

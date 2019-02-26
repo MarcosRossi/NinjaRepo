@@ -20,7 +20,7 @@ namespace ninja
             Mapper.Initialize(cfg =>
             {
                 //Domain=> VM 
-                cfg.CreateMap<Invoice, InvoiceViewModel>()                    
+                cfg.CreateMap<Invoice, InvoiceViewModel>()
                     .ForMember(dest => dest.Details, opts => opts.MapFrom(src => src.GetDetail()));
                 cfg.CreateMap<InvoiceDetail, InvoiceDetailViewModel>();
 
@@ -28,8 +28,9 @@ namespace ninja
                 /*
                  Id Property is the same that Invoice Number, and assign this in create mode
                  In edit i have the Id and work with that for edit Invoice number otherwise i cant because its posibly change another invoice.
-                 */ 
+                 */
                 cfg.CreateMap<InvoiceViewModel, Invoice>()
+                    .ForMember(dest => dest.Type, opts => opts.MapFrom(src => src.Type.ToUpper()))
                     .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id == 0 ? src.InvoiceNumber : src.Id));
                 cfg.CreateMap<InvoiceDetailViewModel, InvoiceDetail>();
             });

@@ -1,0 +1,12 @@
+﻿@model ninja.Models.InvoiceErrorViewModel
+
+@{
+    ViewBag.Title = "InvoiceError";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="alert alert-danger martop-10">
+    @Model.Message
+</div>
+
+@Html.ActionLink("Back", "Index", "Invoice", null, new { @class = "btn btn-primary" })

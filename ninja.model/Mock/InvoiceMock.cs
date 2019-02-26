@@ -82,8 +82,7 @@ namespace ninja.model.Mock
                 InvoiceNumber = 1005,
                 Type = Invoice.Types.A.ToString()
             };
-
-            //Id Could be 2,3,4 because in invoice3 create row with PK Id=1 and PK for general is idenity (1,1). 
+            
             //InvoiceId FK must be Id invoice5 obnject
             invoice5.AddDetail(new InvoiceDetail() { Id = 1001, InvoiceId = 1005, Amount = 22, Description = "Venta varias", UnitPrice = 98.1 });
             invoice5.AddDetail(new InvoiceDetail() { Id = 1002, InvoiceId = 1005, Description = "Venta insumos varios", Amount = 14, UnitPrice = 4.33 });
@@ -95,7 +94,7 @@ namespace ninja.model.Mock
             this._db.Add(new Invoice()
             {
                 Id = 4,
-                InvoiceNumber = 1004,
+                InvoiceNumber = 1006,
                 Type = Invoice.Types.A.ToString()
             });
         }
