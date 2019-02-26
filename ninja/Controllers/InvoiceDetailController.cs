@@ -54,6 +54,7 @@ namespace ninja.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Update(InvoiceDetailViewModel viewModel)
         {
+            this.FillDataSourceInvoice(AutoMapper.Mapper.Map<InvoiceViewModel>(_manager.GetById(viewModel.InvoiceId)));
             if (!ModelState.IsValid)
             {
                 return View("Update", viewModel);

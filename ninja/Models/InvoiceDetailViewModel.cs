@@ -14,17 +14,18 @@ namespace ninja.Models
 
         public long Id { get; set; }
 
-        [Required]        
+        [Required]
         public string Description { get; set; }
 
-        [Required]        
-        public double? Amount { get; set; }
-
-        [Required]        
-        public double? UnitPrice { get; set; }
+        [Required]
+        public double Amount { get; set; }
 
         [Required]
-        [Display(Name ="Invoice")]
+        [DataType(DataType.Currency)]        
+        public double UnitPrice { get; set; }
+
+        [Required]
+        [Display(Name = "Invoice")]
         public long InvoiceId { get; set; }
 
         public double TotalPriceWithTaxes { get; set; }
